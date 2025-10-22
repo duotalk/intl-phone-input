@@ -12,9 +12,9 @@ Aurora-inspired international phone number input delivered as a framework-agnost
 ## Installation
 
 ```bash
-npm install @ramon/intl-phone-input
+npm install @duotalk/intl-phone-input
 # or
-pnpm add @ramon/intl-phone-input
+pnpm add @duotalk/intl-phone-input
 ```
 
 Use the scoped package name above or rename it before publishing to npm if you plan to release under a different scope.
@@ -22,7 +22,10 @@ Use the scoped package name above or rename it before publishing to npm if you p
 ### CDN / Direct `<script type="module">`
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/@ramon/intl-phone-input/dist/index.js"></script>
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@duotalk/intl-phone-input/dist/index.js"
+></script>
 ```
 
 Replace the CDN base once you publish (jsDelivr will point to the latest version automatically).
@@ -32,14 +35,14 @@ Replace the CDN base once you publish (jsDelivr will point to the latest version
 ### Auto-registration (browser)
 
 ```js
-import "@ramon/intl-phone-input";
+import "@duotalk/intl-phone-input";
 // <intl-phone-input> is now available globally
 ```
 
 ### Manual registration (SSR-friendly)
 
 ```js
-import { defineIntlPhoneInput } from "@ramon/intl-phone-input/define";
+import { defineIntlPhoneInput } from "@duotalk/intl-phone-input/define";
 
 defineIntlPhoneInput(); // registers "intl-phone-input"
 // defineIntlPhoneInput("my-phone-input"); // custom tag name
@@ -73,17 +76,17 @@ input.addEventListener("country-change", (event) => {
 
 ## Attributes
 
-| Attribute                | Type                | Default | Description |
-| ------------------------ | ------------------- | ------- | ----------- |
-| `value`                  | `string`            | `""`    | E.164 value reflected as an attribute. |
-| `default-country`        | `string`            | `auto`  | ISO2 code used when no value is present. |
-| `preferred-countries`    | comma separated     | `""`    | Country ISO2 codes pinned to the top. |
-| `allowed-countries`      | comma separated     | `""`    | Optional whitelist (falls back to all). |
-| `placeholder-as-example` | boolean attribute   | off     | Use example numbers as placeholders. |
-| `separate-dial-code`     | boolean attribute   | off     | Shows dial code in a dedicated pill. |
-| `autocomplete`           | `string`            | `tel`   | Forwarded to the native `<input>`. |
-| `disabled`, `required`   | boolean attributes  | off     | Forwarded to the native `<input>`. |
-| `language`               | `string` (BCP 47)   | browser | Controls UI strings and country name localisation. |
+| Attribute                | Type               | Default | Description                                        |
+| ------------------------ | ------------------ | ------- | -------------------------------------------------- |
+| `value`                  | `string`           | `""`    | E.164 value reflected as an attribute.             |
+| `default-country`        | `string`           | `auto`  | ISO2 code used when no value is present.           |
+| `preferred-countries`    | comma separated    | `""`    | Country ISO2 codes pinned to the top.              |
+| `allowed-countries`      | comma separated    | `""`    | Optional whitelist (falls back to all).            |
+| `placeholder-as-example` | boolean attribute  | off     | Use example numbers as placeholders.               |
+| `separate-dial-code`     | boolean attribute  | off     | Shows dial code in a dedicated pill.               |
+| `autocomplete`           | `string`           | `tel`   | Forwarded to the native `<input>`.                 |
+| `disabled`, `required`   | boolean attributes | off     | Forwarded to the native `<input>`.                 |
+| `language`               | `string` (BCP 47)  | browser | Controls UI strings and country name localisation. |
 
 ## Events
 
@@ -114,23 +117,23 @@ intl-phone-input {
 
 Core tokens you can override:
 
-| Variable                | Purpose                                                    |
-| ----------------------- | ---------------------------------------------------------- |
-| `--ipi-font-family`     | Base font family.                                          |
-| `--ipi-surface`         | Background for the outer field.                            |
-| `--ipi-input-surface`   | Background for the `<input>` portion.                      |
-| `--ipi-border`, `--ipi-border-strong` | Border colours for the shell and dial pill. |
-| `--ipi-focus`           | Accent colour used on focus/active states.                 |
-| `--ipi-text` / `--ipi-muted` | Text and secondary text colours.                     |
-| `--ipi-accent`          | Highlight colour for the selector iconography.             |
-| `--ipi-radius`          | Corner radius applied to the shell & dropdown.             |
-| `--ipi-dropdown-bg`     | Dropdown container background.                             |
-| `--ipi-highlight`       | Hover/active colour for country options.                   |
-| `--ipi-shadow`          | Shadow used by the outer field.                            |
-| `--ipi-scrollbar`       | Scrollbar colour inside the dropdown.                      |
-| `--ipi-flag-size`       | Size of rendered emoji flags.                              |
-| `--ipi-backdrop`        | `backdrop-filter` applied to field/dropdown.               |
-| `--dd-z`                | Override the dropdown `z-index` if needed.                 |
+| Variable                              | Purpose                                        |
+| ------------------------------------- | ---------------------------------------------- |
+| `--ipi-font-family`                   | Base font family.                              |
+| `--ipi-surface`                       | Background for the outer field.                |
+| `--ipi-input-surface`                 | Background for the `<input>` portion.          |
+| `--ipi-border`, `--ipi-border-strong` | Border colours for the shell and dial pill.    |
+| `--ipi-focus`                         | Accent colour used on focus/active states.     |
+| `--ipi-text` / `--ipi-muted`          | Text and secondary text colours.               |
+| `--ipi-accent`                        | Highlight colour for the selector iconography. |
+| `--ipi-radius`                        | Corner radius applied to the shell & dropdown. |
+| `--ipi-dropdown-bg`                   | Dropdown container background.                 |
+| `--ipi-highlight`                     | Hover/active colour for country options.       |
+| `--ipi-shadow`                        | Shadow used by the outer field.                |
+| `--ipi-scrollbar`                     | Scrollbar colour inside the dropdown.          |
+| `--ipi-flag-size`                     | Size of rendered emoji flags.                  |
+| `--ipi-backdrop`                      | `backdrop-filter` applied to field/dropdown.   |
+| `--dd-z`                              | Override the dropdown `z-index` if needed.     |
 
 Tip: declare the token overrides on `.dark intl-phone-input` or container elements to theme per section.
 
@@ -148,8 +151,8 @@ Provide additional country metadata before the component loads. Entries are merg
       mask: "## #### ####",
       example: "+52 55 1234 5678",
       exampleDisplay: "55 1234 5678",
-      lengths: [10]
-    }
+      lengths: [10],
+    },
   ];
 </script>
 <script type="module" src="/dist/index.js"></script>
@@ -158,7 +161,7 @@ Provide additional country metadata before the component loads. Entries are merg
 For complete programmatic control you can import the builder:
 
 ```js
-import { buildCountryList } from "@ramon/intl-phone-input/intl-phone-input"; // exposed through the dist copy
+import { buildCountryList } from "@duotalk/intl-phone-input/intl-phone-input"; // exposed through the dist copy
 ```
 
 ## Local Development

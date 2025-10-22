@@ -2,9 +2,25 @@
   "name": "@duotalk/intl-phone-input",
   "version": "1.0.0",
   "description": "Framework-agnostic international phone number input delivered as a Web Component.",
+  "keywords": [
+    "phone",
+    "international",
+    "web-component",
+    "custom-element",
+    "input",
+    "form"
+  ],
+  "homepage": "https://github.com/duotalk/intl-phone-input#readme",
+  "bugs": {
+    "url": "https://github.com/duotalk/intl-phone-input/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duotalk/intl-phone-input.git"
+  },
+  "license": "MIT",
+  "author": "Duotalk <you@example.com>",
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -20,39 +36,26 @@
       "default": "./dist/intl-phone-input.js"
     }
   },
+  "main": "./dist/index.js",
+  "directories": {
+    "example": "examples"
+  },
   "files": [
     "dist",
     "README.md",
     "LICENSE"
   ],
-  "sideEffects": true,
   "scripts": {
     "clean": "rm -rf dist",
     "build": "node scripts/build.js",
     "prepublishOnly": "npm run clean && npm run build"
   },
-  "keywords": [
-    "phone",
-    "international",
-    "web-component",
-    "custom-element",
-    "input",
-    "form"
-  ],
-  "author": "Duotalk <you@example.com>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/duotalk/intl-phone-input.git"
+  "engines": {
+    "node": ">=16.0.0"
   },
-  "bugs": {
-    "url": "https://github.com/duotalk/intl-phone-input/issues"
-  },
-  "homepage": "https://github.com/duotalk/intl-phone-input#readme",
   "publishConfig": {
     "access": "public"
   },
-  "engines": {
-    "node": ">=16.0.0"
-  }
+  "module": "./dist/index.js",
+  "sideEffects": true
 }

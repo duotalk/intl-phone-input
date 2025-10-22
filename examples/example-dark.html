@@ -1,8 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Intl Phone Input – Vanilla Demo</title>
+    <title>Intl Phone Input – Dark Demo</title>
     <style>
       :root {
         color-scheme: dark;
@@ -23,25 +23,25 @@
         padding: 4vw;
         background: radial-gradient(
             circle at top left,
-            rgba(56, 189, 248, 0.25),
-            transparent 35%
+            rgba(56, 189, 248, 0.16),
+            transparent 36%
           ),
           radial-gradient(
             circle at bottom right,
-            rgba(59, 130, 246, 0.2),
-            transparent 40%
+            rgba(99, 102, 241, 0.18),
+            transparent 42%
           ),
-          linear-gradient(135deg, #020617, #0f172a 45%, #111c2c 100%);
+          linear-gradient(135deg, #0f172a, #020617 55%, #0b1120 100%);
         color: #e2e8f0;
       }
 
       main {
         width: min(960px, 94vw);
-        background: rgba(2, 10, 25, 0.72);
+        background: rgba(15, 23, 42, 0.85);
         padding: clamp(2.5rem, 3vw, 3rem);
         border-radius: 24px;
-        border: 1px solid rgba(148, 163, 184, 0.24);
-        box-shadow: 0 32px 60px rgba(8, 13, 23, 0.55);
+        border: 1px solid rgba(94, 234, 212, 0.18);
+        box-shadow: 0 32px 80px rgba(2, 8, 23, 0.65);
         backdrop-filter: blur(18px);
       }
 
@@ -50,16 +50,16 @@
         margin: 0 0 2rem;
         text-align: center;
         color: #f8fafc;
-        text-shadow: 0 6px 20px rgba(15, 23, 42, 0.45);
+        text-shadow: 0 3px 14px rgba(2, 132, 199, 0.4);
       }
 
       .demo-section {
         margin-bottom: 2rem;
         padding: clamp(1.5rem, 3vw, 1.9rem);
         border-radius: 20px;
-        background: rgba(8, 16, 32, 0.6);
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.35);
+        background: rgba(15, 23, 42, 0.72);
+        border: 1px solid rgba(94, 234, 212, 0.14);
+        box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.12);
       }
 
       .demo-section:last-of-type {
@@ -86,7 +86,7 @@
         align-items: center;
         gap: 0.6rem;
         font-weight: 600;
-        color: #cbd5f5;
+        color: rgba(226, 232, 240, 0.85);
         margin-bottom: 0.55rem;
       }
 
@@ -102,6 +102,18 @@
         margin-top: 1rem;
       }
 
+      .toggle-grid {
+        display: grid;
+        gap: 0.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
+
+      .group-label {
+        margin: 0 0 0.4rem;
+        font-weight: 600;
+        color: #e2e8f0;
+      }
+
       button {
         background: linear-gradient(135deg, #38bdf8, #6366f1);
         color: white;
@@ -112,12 +124,12 @@
         font-size: 0.9rem;
         letter-spacing: 0.01em;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
-        box-shadow: 0 12px 24px rgba(56, 189, 248, 0.25);
+        box-shadow: 0 14px 28px rgba(56, 189, 248, 0.28);
       }
 
       button:hover {
         transform: translateY(-1px);
-        box-shadow: 0 16px 32px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 18px 36px rgba(99, 102, 241, 0.32);
       }
 
       button:active {
@@ -127,18 +139,18 @@
       select {
         width: 100%;
         padding: 0.65rem 0.85rem;
-        border: 1px solid rgba(148, 163, 184, 0.35);
+        border: 1px solid rgba(94, 234, 212, 0.28);
         border-radius: 0.75rem;
         font-size: 0.9rem;
-        background: rgba(12, 20, 36, 0.8);
+        background: rgba(15, 23, 42, 0.85);
         color: #e2e8f0;
-        backdrop-filter: blur(18px);
+        backdrop-filter: blur(14px);
       }
 
       select:focus {
         outline: none;
-        border-color: rgba(56, 189, 248, 0.65);
-        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+        border-color: rgba(56, 189, 248, 0.8);
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3);
       }
 
       .status {
@@ -154,24 +166,24 @@
       }
 
       .status.valid {
-        background: rgba(16, 185, 129, 0.15);
-        color: #6ee7b7;
-        border-color: rgba(16, 185, 129, 0.3);
+        background: rgba(34, 197, 94, 0.15);
+        color: #4ade80;
+        border-color: rgba(34, 197, 94, 0.4);
       }
 
       .status.invalid {
-        background: rgba(248, 113, 113, 0.15);
-        color: #fda4af;
-        border-color: rgba(248, 113, 113, 0.28);
+        background: rgba(248, 113, 113, 0.12);
+        color: #fca5a5;
+        border-color: rgba(248, 113, 113, 0.4);
       }
 
       pre {
         margin: 0;
         padding: 1rem 1.25rem;
         border-radius: 0.9rem;
-        background: rgba(8, 16, 32, 0.75);
-        border: 1px solid rgba(56, 189, 248, 0.25);
-        color: #bae6fd;
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        color: #cbd5f5;
         font-size: 0.875rem;
         white-space: pre-wrap;
         word-break: break-word;
@@ -183,6 +195,27 @@
         margin-top: 0.9rem;
         color: rgba(148, 163, 184, 0.75);
         font-style: italic;
+      }
+
+      /* Dark theme overrides for intl-phone-input widget */
+      intl-phone-input {
+        --ipi-surface: linear-gradient(
+          135deg,
+          rgba(15, 23, 42, 0.94),
+          rgba(8, 16, 32, 0.94)
+        );
+        --ipi-input-surface: rgba(9, 14, 28, 0.8);
+        --ipi-text: #e2e8f0;
+        --ipi-muted: rgba(148, 163, 184, 0.75);
+        --ipi-border: rgba(94, 234, 212, 0.18);
+        --ipi-border-strong: rgba(94, 234, 212, 0.32);
+        --ipi-focus: #38bdf8;
+        --ipi-accent: #60a5fa;
+        --ipi-dropdown-bg: rgba(7, 11, 23, 0.95);
+        --ipi-highlight: rgba(94, 234, 212, 0.12);
+        --ipi-shadow: 0 24px 60px rgba(2, 8, 23, 0.7);
+        --ipi-scrollbar: rgba(94, 234, 212, 0.35);
+        --ipi-backdrop: blur(22px);
       }
 
       @media (max-width: 720px) {
@@ -203,7 +236,7 @@
   </head>
   <body>
     <main>
-      <h1>Intl Phone Input – Vanilla Demo</h1>
+      <h1>Intl Phone Input – Dark Demo</h1>
 
       <section class="demo-section">
         <h2>Basic Usage (No Framework)</h2>
@@ -214,8 +247,7 @@
             default-country="br"
             preferred-countries="br,us,pt,ar"
             placeholder-as-example
-            separate-dial-code
-            language="pt-BR"
+            language="en-US"
           ></intl-phone-input>
         </div>
         <div class="actions">
@@ -230,15 +262,38 @@
         <h2>Configuration Controls</h2>
         <div class="form-group">
           <label class="inline">
-            <input type="checkbox" id="toggle-separate" checked />
-            Separate Dial Code
-          </label>
-        </div>
-        <div class="form-group">
-          <label class="inline">
             <input type="checkbox" id="toggle-placeholder" checked />
             Placeholder as Example
           </label>
+        </div>
+        <div class="form-group">
+          <label for="country-display-select">Country Label:</label>
+          <select id="country-display-select">
+            <option value="">Full name</option>
+            <option value="abbr">ISO code</option>
+            <option value="none">Hide name</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <p class="group-label">Appearance Options:</p>
+          <div class="toggle-grid">
+            <label class="inline">
+              <input type="checkbox" data-appearance-token="borderless" />
+              Borderless
+            </label>
+            <label class="inline">
+              <input type="checkbox" data-appearance-token="shadowless" />
+              Shadowless
+            </label>
+            <label class="inline">
+              <input type="checkbox" data-appearance-token="no-radius" />
+              Square Corners
+            </label>
+            <label class="inline">
+              <input type="checkbox" data-appearance-token="no-effects" />
+              Disable Effects
+            </label>
+          </div>
         </div>
         <div class="form-group">
           <label for="language-select">Language:</label>
@@ -271,9 +326,11 @@
       import "../src/index.js";
 
       const phoneInput = document.getElementById("phone-input");
-      const separateToggle = document.getElementById("toggle-separate");
       const placeholderToggle = document.getElementById("toggle-placeholder");
       const languageSelect = document.getElementById("language-select");
+      const countryDisplaySelect = document.getElementById(
+        "country-display-select"
+      );
       const statusEl = document.getElementById("status");
       const stateDisplay = document.getElementById("state-display");
       const eventLogEl = document.getElementById("event-log");
@@ -283,11 +340,16 @@
       const clearLogButton = document.querySelector(
         "button[data-action='clear-log']"
       );
+      const appearanceToggles = document.querySelectorAll(
+        "input[data-appearance-token]"
+      );
 
       const state = {
         phoneNumber: "",
         selectedCountry: null,
         validationStatus: null,
+        countryDisplay: "",
+        appearance: "",
       };
 
       const eventLog = [];
@@ -308,6 +370,8 @@
             phoneNumber: state.phoneNumber,
             selectedCountry: state.selectedCountry,
             validationStatus: state.validationStatus,
+            countryDisplay: state.countryDisplay,
+            appearance: state.appearance,
           },
           null,
           2
@@ -356,6 +420,9 @@
       const syncState = () => {
         state.phoneNumber = phoneInput.value || "";
         state.selectedCountry = phoneInput.selectedCountry || null;
+        state.countryDisplay = phoneInput.getAttribute("country-display") || "";
+        state.appearance = phoneInput.getAttribute("appearance") || "";
+        countryDisplaySelect.value = state.countryDisplay;
         renderState();
       };
 
@@ -368,13 +435,24 @@
         }
 
         phoneInput.applyE164Value(preset.value, { emit: true });
-        // Events emitted above will update state, but ensure local sync once settled.
         requestAnimationFrame(syncState);
       };
 
       const clearValue = () => {
         phoneInput.applyE164Value("", { emit: true });
         requestAnimationFrame(syncState);
+      };
+
+      const syncAppearance = () => {
+        const tokens = Array.from(appearanceToggles)
+          .filter((toggle) => toggle.checked)
+          .map((toggle) => toggle.dataset.appearanceToken);
+        if (tokens.length) {
+          phoneInput.setAttribute("appearance", tokens.join(" "));
+        } else {
+          phoneInput.removeAttribute("appearance");
+        }
+        syncState();
       };
 
       phoneInput.addEventListener("input", (event) => {
@@ -407,20 +485,23 @@
         renderState();
       });
 
-      separateToggle.addEventListener("change", () => {
-        if (separateToggle.checked) {
-          phoneInput.setAttribute("separate-dial-code", "");
-        } else {
-          phoneInput.removeAttribute("separate-dial-code");
-        }
-      });
-
       placeholderToggle.addEventListener("change", () => {
         if (placeholderToggle.checked) {
           phoneInput.setAttribute("placeholder-as-example", "");
         } else {
           phoneInput.removeAttribute("placeholder-as-example");
         }
+        syncState();
+      });
+
+      countryDisplaySelect.addEventListener("change", () => {
+        const value = countryDisplaySelect.value;
+        if (value) {
+          phoneInput.setAttribute("country-display", value);
+        } else {
+          phoneInput.removeAttribute("country-display");
+        }
+        syncState();
       });
 
       languageSelect.addEventListener("change", () => {
@@ -430,6 +511,11 @@
         } else {
           phoneInput.removeAttribute("language");
         }
+        syncState();
+      });
+
+      appearanceToggles.forEach((toggle) => {
+        toggle.addEventListener("change", syncAppearance);
       });
 
       presetButtons.forEach((button) => {
@@ -443,6 +529,8 @@
         eventLog.length = 0;
         renderEventLog();
       });
+
+      syncAppearance();
 
       customElements.whenDefined("intl-phone-input").then(() => {
         requestAnimationFrame(() => {

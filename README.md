@@ -75,18 +75,18 @@ input.addEventListener("country-change", (event) => {
 
 ## Attributes
 
-| Attribute                | Type               | Default | Description                                                                                      |
-| ------------------------ | ------------------ | ------- | ------------------------------------------------------------------------------------------------ |
-| `value`                  | `string`           | `""`    | E.164 value reflected as an attribute.                                                           |
-| `default-country`        | `string`           | `auto`  | ISO2 code used when no value is present.                                                         |
-| `preferred-countries`    | comma separated    | `""`    | Country ISO2 codes pinned to the top.                                                            |
-| `allowed-countries`      | comma separated    | `""`    | Optional whitelist (falls back to all).                                                          |
-| `placeholder-as-example` | boolean attribute  | off     | Use example numbers as placeholders.                                                             |
-| `autocomplete`           | `string`           | `tel`   | Forwarded to the native `<input>`.                                                               |
-| `disabled`, `required`   | boolean attributes | off     | Forwarded to the native `<input>`.                                                               |
+| Attribute                | Type               | Default | Description                                                                                    |
+| ------------------------ | ------------------ | ------- | ---------------------------------------------------------------------------------------------- |
+| `value`                  | `string`           | `""`    | E.164 value reflected as an attribute.                                                         |
+| `default-country`        | `string`           | `auto`  | ISO2 code used when no value is present.                                                       |
+| `preferred-countries`    | comma separated    | `""`    | Country ISO2 codes pinned to the top.                                                          |
+| `allowed-countries`      | comma separated    | `""`    | Optional whitelist (falls back to all).                                                        |
+| `placeholder-as-example` | boolean attribute  | off     | Use example numbers as placeholders.                                                           |
+| `autocomplete`           | `string`           | `tel`   | Forwarded to the native `<input>`.                                                             |
+| `disabled`, `required`   | boolean attributes | off     | Forwarded to the native `<input>`.                                                             |
 | `appearance`             | token list         | `""`    | Optional UI toggles: `borderless`, `shadowless`, `no-radius`, `no-effects`. Combine as needed. |
-| `country-display`        | enum               | `name`  | Selector label format: `name` (full), `abbr` (ISO), or `none` (hide).                            |
-| `language`               | `string` (BCP 47)  | browser | Controls UI strings and country name localisation.                                               |
+| `country-display`        | enum               | `name`  | Selector label format: `name` (full), `abbr` (ISO), or `none` (hide).                          |
+| `language`               | `string` (BCP 47)  | browser | Controls UI strings and country name localisation.                                             |
 
 ## Events
 
@@ -159,12 +159,12 @@ Use the `appearance` attribute to tone down the built-in chrome without having t
 <intl-phone-input appearance="borderless no-effects"></intl-phone-input>
 ```
 
-| Token         | Effect                                                            |
-| ------------- | ----------------------------------------------------------------- |
-| `borderless`  | Removes the outer shell border and dropdown border.               |
-| `shadowless`  | Strips shadows from the shell, dropdown, and flag avatar.         |
-| `no-radius`   | Forces square corners by zeroing the shell & dropdown radius.     |
-| `no-effects`  | Disables hover/focus animations and highlight backgrounds.        |
+| Token        | Effect                                                        |
+| ------------ | ------------------------------------------------------------- |
+| `borderless` | Removes the outer shell border and dropdown border.           |
+| `shadowless` | Strips shadows from the shell, dropdown, and flag avatar.     |
+| `no-radius`  | Forces square corners by zeroing the shell & dropdown radius. |
+| `no-effects` | Disables hover/focus animations and highlight backgrounds.    |
 
 Tokens can be combined freely, and you can still override the CSS variables above for finer control.
 
@@ -216,14 +216,6 @@ npm run build    # copies ./src → ./dist
 
 - `examples/` contains ready-to-open demos (Web Component + Vue 2/3).
 - `scripts/build.js` is used by `npm run build` and `npm publish` to keep `dist` in sync.
-
-## Publishing Checklist
-
-1. Update `package.json` fields (`name`, `description`, `repository`, `author`) to match your public project.
-2. Run `npm run build` and commit the generated `dist/` output if you want it checked into GitHub.
-3. Tag a release (`git tag v1.0.0 && git push --tags`).
-4. Publish to npm: `npm publish --access public`.
-5. Push to GitHub: `git push origin main` (or your default branch).
 
 ## Examples
 

@@ -1,6 +1,6 @@
 {
   "name": "@duotalk/intl-phone-input",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Framework-agnostic international phone number input delivered as a Web Component.",
   "keywords": [
     "phone",

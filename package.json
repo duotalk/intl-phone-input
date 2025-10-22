@@ -1,0 +1,58 @@
+{
+  "name": "@duotalk/intl-phone-input",
+  "version": "1.0.0",
+  "description": "Framework-agnostic international phone number input delivered as a Web Component.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "browser": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./define": {
+      "import": "./dist/define.js",
+      "default": "./dist/define.js"
+    },
+    "./intl-phone-input": {
+      "import": "./dist/intl-phone-input.js",
+      "default": "./dist/intl-phone-input.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": true,
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "node scripts/build.js",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "phone",
+    "international",
+    "web-component",
+    "custom-element",
+    "input",
+    "form"
+  ],
+  "author": "Duotalk <you@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duotalk/intl-phone-input.git"
+  },
+  "bugs": {
+    "url": "https://github.com/duotalk/intl-phone-input/issues"
+  },
+  "homepage": "https://github.com/duotalk/intl-phone-input#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

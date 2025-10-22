@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Intl Phone Input – Vue 2 Demo</title>
+    <style>
+      body {
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(
+            circle at top left,
+            rgba(56, 189, 248, 0.25),
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at bottom right,
+            rgba(59, 130, 246, 0.2),
+            transparent 40%
+          ),
+          linear-gradient(135deg, #020617, #0f172a 45%, #111c2c 100%);
+        color: #e2e8f0;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 1.9rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: #f8fafc;
+        text-shadow: 0 6px 20px rgba(15, 23, 42, 0.45);
+      }
+
+      main {
+        width: min(960px, 92vw);
+        background: rgba(2, 10, 25, 0.7);
+        padding: 2.75rem 3rem;
+        border-radius: 1.5rem;
+        border: 1px solid rgba(148, 163, 184, 0.24);
+        box-shadow: 0 32px 60px rgba(8, 13, 23, 0.55);
+        backdrop-filter: blur(18px);
+      }
+
+      .demo-section {
+        margin-bottom: 2rem;
+        padding: 1.75rem;
+        border-radius: 1rem;
+        background: rgba(8, 16, 32, 0.6);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.35);
+      }
+
+      .demo-section:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .demo-section h2 {
+        font-size: 1.25rem;
+        margin-bottom: 1.25rem;
+        color: #f1f5f9;
+      }
+
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #cbd5f5;
+      }
+
+      button {
+        background: linear-gradient(135deg, #38bdf8, #6366f1);
+        color: white;
+        border: none;
+        padding: 0.6rem 1.1rem;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 0.875rem;
+        margin-right: 0.5rem;
+        letter-spacing: 0.01em;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 12px 24px rgba(56, 189, 248, 0.25);
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 32px rgba(99, 102, 241, 0.3);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .status {
+        margin-top: 0.75rem;
+        padding: 0.85rem 1rem;
+        border-radius: 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .status.valid {
+        background: rgba(16, 185, 129, 0.15);
+        color: #6ee7b7;
+        border: 1px solid rgba(16, 185, 129, 0.25);
+      }
+
+      .status.invalid {
+        background: rgba(248, 113, 113, 0.15);
+        color: #fda4af;
+        border: 1px solid rgba(248, 113, 113, 0.25);
+      }
+
+      pre {
+        margin-top: 1rem;
+        padding: 1rem 1.25rem;
+        border-radius: 0.9rem;
+        background: rgba(8, 16, 32, 0.75);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        color: #bae6fd;
+        font-size: 0.875rem;
+        white-space: pre-wrap;
+        word-break: break-word;
+        max-height: 220px;
+        overflow-y: auto;
+      }
+
+      select {
+        padding: 0.6rem 0.85rem;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        border-radius: 0.75rem;
+        font-size: 0.875rem;
+        background: rgba(12, 20, 36, 0.8);
+        color: #e2e8f0;
+        backdrop-filter: blur(18px);
+      }
+
+      select:focus {
+        outline: none;
+        border-color: rgba(56, 189, 248, 0.65);
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+      }
+
+      #app p {
+        color: rgba(148, 163, 184, 0.8);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Intl Phone Input - Vue 2 Demo</h1>
+
+      <div id="app">
+        <div class="demo-section">
+          <h2>Basic Usage with Options API</h2>
+          <div class="form-group">
+            <label>Phone Number:</label>
+            <intl-phone-input
+              ref="phoneInput"
+              :default-country="defaultCountry"
+              :preferred-countries="preferredCountries.join(',')"
+              :placeholder-as-example="placeholderAsExample"
+              :separate-dial-code="separateDialCode"
+              :language="language"
+              @input="onInput"
+              @change="onChange"
+              @country-change="onCountryChange"
+              @valid="onValid"
+              @invalid="onInvalid"
+            ></intl-phone-input>
+          </div>
+
+          <div class="form-group">
+            <button @click="setValue('+5511990000000', 'br')">
+              Set Brazilian Number
+            </button>
+            <button @click="setValue('+14165550123', 'ca')">
+              Set Canadian Number
+            </button>
+            <button @click="clearValue">Clear</button>
+          </div>
+
+          <div
+            v-if="validationStatus"
+            :class="['status', validationStatus.isValid ? 'valid' : 'invalid']"
+          >
+            {{ validationStatus.isValid ? '✓ Valid phone number' : '' }} {{
+            !validationStatus.isValid ? '✗ Invalid phone number' : '' }}
+          </div>
+        </div>
+
+        <div class="demo-section">
+          <h2>Configuration Controls</h2>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" v-model="separateDialCode" />
+              Separate Dial Code
+            </label>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" v-model="placeholderAsExample" />
+              Placeholder as Example
+            </label>
+          </div>
+          <div class="form-group">
+            <label>Language:</label>
+            <select v-model="language">
+              <option value="">Browser Default</option>
+              <option value="en-US">English (US)</option>
+              <option value="pt-BR">Portuguese (Brazil)</option>
+              <option value="es-ES">Spanish</option>
+              <option value="fr-FR">French</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="demo-section">
+          <h2>Current State</h2>
+          <pre>
+{{ JSON.stringify({
+            phoneNumber: phoneNumber,
+            selectedCountry: selectedCountry,
+            isValid: validationStatus ? validationStatus.isValid : false
+          }, null, 2) }}</pre
+          >
+        </div>
+
+        <div class="demo-section">
+          <h2>Event Log</h2>
+          <button @click="clearLog">Clear Log</button>
+          <pre v-if="eventLog.length">{{ eventLog.join('\n') }}</pre>
+          <p
+            v-else
+            style="color: rgba(148, 163, 184, 0.75); font-style: italic"
+          >
+            No events yet...
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Vue 2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+    <!-- Import the web component -->
+    <script type="module">
+      import "../src/index.js";
+    </script>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          // State
+          phoneNumber: "",
+          selectedCountry: null,
+          validationStatus: null,
+          eventLog: [],
+
+          // Configuration
+          defaultCountry: "br",
+          preferredCountries: ["br", "us", "pt", "ar"],
+          separateDialCode: true,
+          placeholderAsExample: true,
+          language: "pt-BR",
+        },
+        watch: {
+          // Watch for configuration changes and update the component
+          separateDialCode: function () {
+            this.updateComponentAttributes();
+          },
+          placeholderAsExample: function () {
+            this.updateComponentAttributes();
+          },
+          language: function () {
+            this.updateComponentAttributes();
+          },
+          defaultCountry: function () {
+            this.updateComponentAttributes();
+          },
+        },
+        methods: {
+          logEvent: function (eventType, detail) {
+            var timestamp = new Date().toLocaleTimeString();
+            var logEntry =
+              "[" +
+              timestamp +
+              "] " +
+              eventType +
+              ": " +
+              JSON.stringify(detail);
+            this.eventLog.unshift(logEntry);
+
+            // Keep only last 10 events
+            if (this.eventLog.length > 10) {
+              this.eventLog = this.eventLog.slice(0, 10);
+            }
+          },
+
+          onInput: function (event) {
+            this.phoneNumber = event.detail;
+            this.logEvent("input", event.detail);
+          },
+
+          onChange: function (event) {
+            this.logEvent("change", event.detail);
+          },
+
+          onCountryChange: function (event) {
+            this.selectedCountry = event.detail;
+            this.logEvent("country-change", event.detail);
+          },
+
+          onValid: function (event) {
+            this.validationStatus = event.detail;
+            this.logEvent("valid", event.detail);
+          },
+
+          onInvalid: function (event) {
+            this.validationStatus = event.detail;
+            this.logEvent("invalid", event.detail);
+          },
+
+          setValue: function (value, iso) {
+            var element = this.$refs.phoneInput;
+            if (!element) return;
+
+            if (iso) {
+              element.selectCountryByIso(iso, { emit: true });
+            }
+
+            element.applyE164Value(value, { emit: true });
+            this.phoneNumber = element.value || "";
+            this.selectedCountry = element.selectedCountry || null;
+          },
+
+          clearValue: function () {
+            var element = this.$refs.phoneInput;
+            if (!element) return;
+
+            element.applyE164Value("", { emit: true });
+            this.phoneNumber = element.value || "";
+            this.selectedCountry = element.selectedCountry || null;
+          },
+
+          clearLog: function () {
+            this.eventLog = [];
+          },
+
+          updateComponentAttributes: function () {
+            var self = this;
+            this.$nextTick(function () {
+              if (self.$refs.phoneInput) {
+                // Update attributes on the web component
+                if (self.separateDialCode) {
+                  self.$refs.phoneInput.setAttribute("separate-dial-code", "");
+                } else {
+                  self.$refs.phoneInput.removeAttribute("separate-dial-code");
+                }
+
+                if (self.placeholderAsExample) {
+                  self.$refs.phoneInput.setAttribute(
+                    "placeholder-as-example",
+                    ""
+                  );
+                } else {
+                  self.$refs.phoneInput.removeAttribute(
+                    "placeholder-as-example"
+                  );
+                }
+
+                self.$refs.phoneInput.setAttribute("language", self.language);
+                self.$refs.phoneInput.setAttribute(
+                  "default-country",
+                  self.defaultCountry
+                );
+                self.$refs.phoneInput.setAttribute(
+                  "preferred-countries",
+                  self.preferredCountries.join(",")
+                );
+              }
+            });
+          },
+        },
+        mounted: function () {
+          // Initial setup
+          this.updateComponentAttributes();
+
+          // Wait for the component to be fully initialized
+          var self = this;
+          setTimeout(function () {
+            if (
+              self.$refs.phoneInput &&
+              self.$refs.phoneInput.selectedCountry
+            ) {
+              // Get the initial country information from the component
+              self.selectedCountry = self.$refs.phoneInput.selectedCountry;
+            }
+          }, 100);
+        },
+      });
+    </script>
+  </body>
+</html>

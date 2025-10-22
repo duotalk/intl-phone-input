@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Intl Phone Input – Vanilla Demo</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4vw;
+        background: radial-gradient(
+            circle at top left,
+            rgba(56, 189, 248, 0.25),
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at bottom right,
+            rgba(59, 130, 246, 0.2),
+            transparent 40%
+          ),
+          linear-gradient(135deg, #020617, #0f172a 45%, #111c2c 100%);
+        color: #e2e8f0;
+      }
+
+      main {
+        width: min(960px, 94vw);
+        background: rgba(2, 10, 25, 0.72);
+        padding: clamp(2.5rem, 3vw, 3rem);
+        border-radius: 24px;
+        border: 1px solid rgba(148, 163, 184, 0.24);
+        box-shadow: 0 32px 60px rgba(8, 13, 23, 0.55);
+        backdrop-filter: blur(18px);
+      }
+
+      h1 {
+        font-size: clamp(1.8rem, 3vw, 2.1rem);
+        margin: 0 0 2rem;
+        text-align: center;
+        color: #f8fafc;
+        text-shadow: 0 6px 20px rgba(15, 23, 42, 0.45);
+      }
+
+      .demo-section {
+        margin-bottom: 2rem;
+        padding: clamp(1.5rem, 3vw, 1.9rem);
+        border-radius: 20px;
+        background: rgba(8, 16, 32, 0.6);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.35);
+      }
+
+      .demo-section:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .demo-section h2 {
+        margin-top: 0;
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
+        color: #f1f5f9;
+      }
+
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+
+      .form-group:last-of-type {
+        margin-bottom: 0;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-weight: 600;
+        color: #cbd5f5;
+        margin-bottom: 0.55rem;
+      }
+
+      label.inline {
+        margin-bottom: 0;
+        font-weight: 500;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+
+      button {
+        background: linear-gradient(135deg, #38bdf8, #6366f1);
+        color: white;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        letter-spacing: 0.01em;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 12px 24px rgba(56, 189, 248, 0.25);
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 32px rgba(99, 102, 241, 0.3);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      select {
+        width: 100%;
+        padding: 0.65rem 0.85rem;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        border-radius: 0.75rem;
+        font-size: 0.9rem;
+        background: rgba(12, 20, 36, 0.8);
+        color: #e2e8f0;
+        backdrop-filter: blur(18px);
+      }
+
+      select:focus {
+        outline: none;
+        border-color: rgba(56, 189, 248, 0.65);
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+      }
+
+      .status {
+        margin-top: 1rem;
+        padding: 0.9rem 1.1rem;
+        border-radius: 0.85rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: 1px solid transparent;
+      }
+
+      .status.valid {
+        background: rgba(16, 185, 129, 0.15);
+        color: #6ee7b7;
+        border-color: rgba(16, 185, 129, 0.3);
+      }
+
+      .status.invalid {
+        background: rgba(248, 113, 113, 0.15);
+        color: #fda4af;
+        border-color: rgba(248, 113, 113, 0.28);
+      }
+
+      pre {
+        margin: 0;
+        padding: 1rem 1.25rem;
+        border-radius: 0.9rem;
+        background: rgba(8, 16, 32, 0.75);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        color: #bae6fd;
+        font-size: 0.875rem;
+        white-space: pre-wrap;
+        word-break: break-word;
+        max-height: 220px;
+        overflow-y: auto;
+      }
+
+      .empty {
+        margin-top: 0.9rem;
+        color: rgba(148, 163, 184, 0.75);
+        font-style: italic;
+      }
+
+      @media (max-width: 720px) {
+        main {
+          padding: 2rem 1.5rem;
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+
+        button {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Intl Phone Input – Vanilla Demo</h1>
+
+      <section class="demo-section">
+        <h2>Basic Usage (No Framework)</h2>
+        <div class="form-group">
+          <label for="phone-input">Phone Number:</label>
+          <intl-phone-input
+            id="phone-input"
+            default-country="br"
+            preferred-countries="br,us,pt,ar"
+            placeholder-as-example
+            separate-dial-code
+            language="pt-BR"
+          ></intl-phone-input>
+        </div>
+        <div class="actions">
+          <button data-preset="br">Set Brazilian Number</button>
+          <button data-preset="ca">Set Canadian Number</button>
+          <button data-action="clear">Clear</button>
+        </div>
+        <div id="status" class="status" hidden></div>
+      </section>
+
+      <section class="demo-section">
+        <h2>Configuration Controls</h2>
+        <div class="form-group">
+          <label class="inline">
+            <input type="checkbox" id="toggle-separate" checked />
+            Separate Dial Code
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="inline">
+            <input type="checkbox" id="toggle-placeholder" checked />
+            Placeholder as Example
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="language-select">Language:</label>
+          <select id="language-select">
+            <option value="">Browser Default</option>
+            <option value="en-US">English (US)</option>
+            <option value="pt-BR" selected>Português (Brasil)</option>
+            <option value="es-ES">Español</option>
+            <option value="fr-FR">Français</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="demo-section">
+        <h2>Current State</h2>
+        <pre id="state-display">{}</pre>
+      </section>
+
+      <section class="demo-section">
+        <h2>Event Log</h2>
+        <div class="actions">
+          <button data-action="clear-log">Clear Log</button>
+        </div>
+        <pre id="event-log" hidden></pre>
+        <p id="event-empty" class="empty">No events yet...</p>
+      </section>
+    </main>
+
+    <script type="module">
+      import "../src/index.js";
+
+      const phoneInput = document.getElementById("phone-input");
+      const separateToggle = document.getElementById("toggle-separate");
+      const placeholderToggle = document.getElementById("toggle-placeholder");
+      const languageSelect = document.getElementById("language-select");
+      const statusEl = document.getElementById("status");
+      const stateDisplay = document.getElementById("state-display");
+      const eventLogEl = document.getElementById("event-log");
+      const eventEmptyEl = document.getElementById("event-empty");
+      const presetButtons = document.querySelectorAll("button[data-preset]");
+      const clearButton = document.querySelector("button[data-action='clear']");
+      const clearLogButton = document.querySelector(
+        "button[data-action='clear-log']"
+      );
+
+      const state = {
+        phoneNumber: "",
+        selectedCountry: null,
+        validationStatus: null,
+      };
+
+      const eventLog = [];
+      const presetValues = {
+        br: {
+          value: "+5511987654321",
+          iso: "br",
+        },
+        ca: {
+          value: "+14165550123",
+          iso: "ca",
+        },
+      };
+
+      const renderState = () => {
+        stateDisplay.textContent = JSON.stringify(
+          {
+            phoneNumber: state.phoneNumber,
+            selectedCountry: state.selectedCountry,
+            validationStatus: state.validationStatus,
+          },
+          null,
+          2
+        );
+      };
+
+      const renderStatus = () => {
+        if (!state.validationStatus) {
+          statusEl.hidden = true;
+          statusEl.classList.remove("valid", "invalid");
+          statusEl.textContent = "";
+          return;
+        }
+
+        statusEl.hidden = false;
+        const isValid = state.validationStatus.isValid;
+        statusEl.classList.toggle("valid", isValid);
+        statusEl.classList.toggle("invalid", !isValid);
+        statusEl.textContent = isValid
+          ? "✓ Valid phone number"
+          : "✗ Invalid phone number";
+      };
+
+      const renderEventLog = () => {
+        if (!eventLog.length) {
+          eventLogEl.hidden = true;
+          eventEmptyEl.hidden = false;
+          return;
+        }
+        eventEmptyEl.hidden = true;
+        eventLogEl.hidden = false;
+        eventLogEl.textContent = eventLog.join("\n");
+      };
+
+      const logEvent = (type, detail) => {
+        const stamp = new Date().toLocaleTimeString();
+        eventLog.unshift(
+          `[${stamp}] ${type}: ${JSON.stringify(detail, null, 0)}`
+        );
+        if (eventLog.length > 10) {
+          eventLog.length = 10;
+        }
+        renderEventLog();
+      };
+
+      const syncState = () => {
+        state.phoneNumber = phoneInput.value || "";
+        state.selectedCountry = phoneInput.selectedCountry || null;
+        renderState();
+      };
+
+      const applyPreset = (presetKey) => {
+        const preset = presetValues[presetKey];
+        if (!preset) return;
+
+        if (preset.iso) {
+          phoneInput.selectCountryByIso(preset.iso, { emit: true });
+        }
+
+        phoneInput.applyE164Value(preset.value, { emit: true });
+        // Events emitted above will update state, but ensure local sync once settled.
+        requestAnimationFrame(syncState);
+      };
+
+      const clearValue = () => {
+        phoneInput.applyE164Value("", { emit: true });
+        requestAnimationFrame(syncState);
+      };
+
+      phoneInput.addEventListener("input", (event) => {
+        state.phoneNumber = event.detail;
+        logEvent("input", event.detail);
+        renderState();
+      });
+
+      phoneInput.addEventListener("change", (event) => {
+        logEvent("change", event.detail);
+      });
+
+      phoneInput.addEventListener("country-change", (event) => {
+        state.selectedCountry = event.detail;
+        logEvent("country-change", event.detail);
+        renderState();
+      });
+
+      phoneInput.addEventListener("valid", (event) => {
+        state.validationStatus = event.detail;
+        logEvent("valid", event.detail);
+        renderStatus();
+        renderState();
+      });
+
+      phoneInput.addEventListener("invalid", (event) => {
+        state.validationStatus = event.detail;
+        logEvent("invalid", event.detail);
+        renderStatus();
+        renderState();
+      });
+
+      separateToggle.addEventListener("change", () => {
+        if (separateToggle.checked) {
+          phoneInput.setAttribute("separate-dial-code", "");
+        } else {
+          phoneInput.removeAttribute("separate-dial-code");
+        }
+      });
+
+      placeholderToggle.addEventListener("change", () => {
+        if (placeholderToggle.checked) {
+          phoneInput.setAttribute("placeholder-as-example", "");
+        } else {
+          phoneInput.removeAttribute("placeholder-as-example");
+        }
+      });
+
+      languageSelect.addEventListener("change", () => {
+        const value = languageSelect.value;
+        if (value) {
+          phoneInput.setAttribute("language", value);
+        } else {
+          phoneInput.removeAttribute("language");
+        }
+      });
+
+      presetButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          applyPreset(button.dataset.preset);
+        });
+      });
+
+      clearButton.addEventListener("click", clearValue);
+      clearLogButton.addEventListener("click", () => {
+        eventLog.length = 0;
+        renderEventLog();
+      });
+
+      customElements.whenDefined("intl-phone-input").then(() => {
+        requestAnimationFrame(() => {
+          syncState();
+          renderStatus();
+        });
+      });
+    </script>
+  </body>
+</html>

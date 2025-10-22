@@ -94,6 +94,7 @@ template.innerHTML = `
       display: inline-flex;
       align-items: center;
       width: 100%;
+      height: 100%;
       background: var(--ipi-surface);
       border: var(--ipi-field-border, 1px solid var(--ipi-border));
       border-radius: var(--ipi-radius);
@@ -855,8 +856,7 @@ export class IntlPhoneInputElement extends HTMLElement {
 
     if (this.elements.selectorName) {
       this.elements.selectorName.textContent = displayName || "";
-      this.elements.selectorName.style.display =
-        mode === "none" ? "none" : "";
+      this.elements.selectorName.style.display = mode === "none" ? "none" : "";
     }
 
     if (this.elements.selectorDial) {
